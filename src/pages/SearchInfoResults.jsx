@@ -1,5 +1,6 @@
 import Filter from "../components/SearchInfo/Filter";
 import Photocontainer from "../components/SearchInfo/Photocontainer";
+import SearchResult from "../components/SearchInfo/SearchResult";
 import Navbar from "../layouts/header/Navbar";
 
 const SearchInfoResults = () => {
@@ -7,7 +8,7 @@ const SearchInfoResults = () => {
     <main>
       <Navbar />
       <Filter />
-      <Photocontainer />
+      <SearchResult />
     </main>
   );
 };

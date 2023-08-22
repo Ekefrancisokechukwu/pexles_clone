@@ -25,7 +25,12 @@ const SinglePics = ({
       style={{ background: avg_color }}
     >
       {/* <Link to={`/${id}`} className="   h-min  bg-slate-700 rounded-md"> */}
-      <img src={large} alt={alt} className="rounded-md object-cover w-full" />
+      <img
+        src={large}
+        alt={alt}
+        // loading="lazy"
+        className="rounded-md object-cover w-full"
+      />
       <figure className="absolute opacity-0 flex flex-col justify-between invisible group-hover:visible group-hover:opacity-100 bg-gradient-to-b rounded-md from-black/60 via-transparent to-black/60 transition-all ease-in-out duration-300 left-0 top-0 w-full h-full p-3">
         <button
           className="bg-gray-200 h-10 w-10 grid place-items-center rounded-md ms-auto"

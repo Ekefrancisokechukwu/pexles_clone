@@ -1,29 +1,38 @@
+import axios from "axios";
 import { createClient } from "pexels";
 import { useEffect, useState } from "react";
 
-export const client = createClient(import.meta.env.VITE_API_KEY);
+export const API_PHOTO_ENDPIONT = "https://api.pexels.com/v1";
+export const API_VIDEO_ENDPIONT = "https://api.pexels.com/videos/";
+
+export const authFetch = axios.create({
+  headers: {
+    Authorization: import.meta.env.VITE_API_KEY,
+  },
+});
 
 export const useFetch = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [featured, setFeatured] = useState([]);
   const [videos, setVideos] = useState([]);
 
   const getdata = async () => {
+    setLoading(true);
     try {
-      const curatedPhotos = await client.photos
-        .curated({ per_page: 40 })
+      const curatedPhotos = await authFetch
+        .get(`${API_PHOTO_ENDPIONT}/curated?page=2&per_page=30`)
         .then((photos) => {
-          return photos;
+          return photos.data.photos;
         });
 
-      const popularVideos = await client.videos
-        .popular({ per_page: 40 })
-        .then((photos) => {
-          return photos;
+      const popularVideos = await authFetch
+        .get(`${API_VIDEO_ENDPIONT}/popular?page=2&per_page=30`)
+        .then((video) => {
+          return video.data.videos;
         });
-      setFeatured(curatedPhotos.photos);
-      setVideos(popularVideos.videos);
+      setFeatured(curatedPhotos);
+      setVideos(popularVideos);
       setLoading(false);
     } catch (error) {
       setError(error.response);
@@ -41,26 +50,4 @@ export const useFetch = () => {
     videos,
     error,
   };
-};
-
-export const useFetchSingle = (param) => {
-  const [data, setData] = useState(null);
-  const fetch = async () => {
-    try {
-      const getPhoto = await client.photos
-        .show({ id: param || null })
-        .then((photos) => {
-          return photos;
-        });
-
-      setData(getPhoto);
-      console.log(getPhoto);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    fetch();
-  }, [param]);
-
-  return {};
 };

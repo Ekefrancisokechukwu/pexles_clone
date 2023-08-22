@@ -8,9 +8,12 @@ const Filter = () => {
   const [openfilter, setopenfilter] = useState(false);
   const {
     $scape,
+    $colors,
     setOriented,
     oriented,
     updateFilter,
+    setActiveFilter,
+    activeFilter,
     searchPhotos,
     searchVideos,
     filters: { scape },
@@ -20,11 +23,21 @@ const Filter = () => {
     <div className="mt-7 lg:px-16 px-3">
       <div className=" flex flex-wrap justify-between items-center">
         <div className="flex gap-4">
-          <button className="py-2 px-4 hover:bg-black/80  rounded-3xl bg-black text-white">
+          <button
+            onClick={() => setActiveFilter("photos")}
+            className={`py-2 px-4 hover:bg-black/80  rounded-3xl bg-black text-white  ${
+              activeFilter === "photos" ? "bg-black" : "bg-black/60"
+            }`}
+          >
             Photos
             <span className="ml-2">{searchPhotos?.length || 0}</span>
           </button>
-          <button className="py-2 px-4  hover:bg-black/80 rounded-3xl bg-black text-white">
+          <button
+            onClick={() => setActiveFilter("videos")}
+            className={`py-2 px-4  hover:bg-black/80 rounded-3xl  text-white ${
+              activeFilter === "videos" ? "bg-black" : "bg-black/60"
+            }`}
+          >
             videos
             <span className="ml-2">{searchVideos.length || 0}</span>
           </button>
@@ -52,14 +65,14 @@ const Filter = () => {
               : "md:-mt-8 -mt-40 opacity-0 invisible"
           }`}
         >
-          <div className="border z-10 border-gray-400 relative hover:border-gray-600  rounded-md">
+          {/* <div className="border z-10 border-gray-400 relative hover:border-gray-600  rounded-md">
             <button className="flex peer capitalize f items-center menu-item text-lg justify-between py-3 px-4 rounded-md w-full">
               <span>{scape}</span>
               <BiChevronDown className="transition-transform " />
             </button>
             <div
               className="absolute origin-top peer-focus-within:scale-100
-            peer-focus-within:visible scale-95 invisible transition-transform duration-150
+            peer-focus-within:visible scale-95  transition-transform duration-150
              ease-in-out bg-white w-full left-0 top-[110%] border
            border-gray-400 shadow-lg rounded-md"
             >
@@ -77,12 +90,14 @@ const Filter = () => {
               ))}
             </div>
           </div>
+
           <div className="border border-gray-400 hover:border-gray-600  rounded-md">
             <button className="flex items-center text-lg justify-between py-3 px-4 rounded-md w-full">
               <span>All sizes</span> <BiChevronDown />
             </button>
-          </div>
-          <div className="border border-gray-400 hover:border-gray-600  rounded-md">
+          </div> */}
+
+          <div className="border border-gray-400 hover:border-gray-600  rounded-md relative">
             <button className="flex items-center  text-lg justify-between py-3 sm:px-4 rounded-md w-full ">
               <div className="flex items-center gap-1">
                 {" "}
@@ -94,6 +109,24 @@ const Filter = () => {
               </div>{" "}
               <BiChevronDown />
             </button>
+            <div
+              className="absolute origin-top 
+              peer-focus-within:visible   transition-transform duration-150
+               ease-in-out z-10 bg-white w-full left-0 top-[110%] border
+             border-gray-400 shadow-lg rounded-md"
+            >
+              <div className="p-2 flex gap-1 flex-wrap">
+                {$colors.map((bg, i) => {
+                  return (
+                    <span
+                      key={i}
+                      style={{ background: bg, cursor: "pointer" }}
+                      className="w-[3rem] inline-block min-h-[2rem] hover:scale-105"
+                    ></span>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </form>
