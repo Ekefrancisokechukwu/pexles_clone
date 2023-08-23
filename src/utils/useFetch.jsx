@@ -1,5 +1,4 @@
 import axios from "axios";
-import { createClient } from "pexels";
 import { useEffect, useState } from "react";
 
 export const API_PHOTO_ENDPIONT = "https://api.pexels.com/v1";
